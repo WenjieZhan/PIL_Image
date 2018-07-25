@@ -1,0 +1,33 @@
+from PTL import Image
+
+imageName='soure.png'
+def image_transpose(image)
+  '''
+        Input: a Image instance
+        Output: a transposed Image instance
+        Function:
+            * switches the left and the right part of a Image instance
+            * for the left part of the original instance, flips left and right\
+                and then make it upside down.
+  '''
+  x, y =image.size
+  xleft=x//2
+  
+  # define  box
+  boxLeft      = (0, 0, xsizeLeft, ysize)   #左框
+  boxRight     = (xsizeLeft, 0, xsize, ysize)   #右框
+  boxLeftNew   = (0, 0, xsize - xsizeLeft, ysize)
+  boxRightNew  = (xsize - xsizeLeft, 0, xsize, ysize)
+  
+  
+  #PIL使用左上角为 (0, 0)的坐标系统  Image.crop(A,B,C,D)中A,B,C,D坐标指向像素之间的位置,剪切（A,B） (C,D)两对角点所框的区域
+  partLeft     = image.crop(boxLeft).transpose(Image.FLIP_LEFT_RIGHT).transpose(Image.ROTATE_180)
+  partRight    = image.crop(boxRight)
+
+  image.paste(partRight, boxLeftNew)
+  image.paste(partLeft, boxRightNew)
+  return image
+  
+avatar = Image.open(imageFName)
+avatar = iamge_transpose(avatar)
+avatar.show()
